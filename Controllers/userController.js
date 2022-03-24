@@ -21,7 +21,7 @@ class UserController {
         
         let user = {};
 
-        [... this.formEl.elements].forEach(function (field, index) {
+        [... this.formEl.elements].forEach( (field, index) => {
     
     if (field.name == 'gender') {
         if (field.checked) {
