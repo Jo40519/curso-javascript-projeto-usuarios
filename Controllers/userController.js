@@ -1,16 +1,23 @@
 class UserController {
+
     constructor(formId, tableId) {
         
         this.formEl = document.getElementById(formId)
         this.tableEl = document.getElementById(tableId)
 
         this.onSubmit();
-    }
+  }
+  
+
 
     onSubmit() {
 
     this.formEl.addEventListener('submit', event => {
-        event.preventDefault(); 
+      event.preventDefault(); 
+      
+      let btn = this.formEl.querySelector("[type=submit]")
+      
+      btn.disabled = true
 
       let values = this.getValues();
       
@@ -18,6 +25,10 @@ class UserController {
 
           values.photo = content
         this.addLine(values);
+
+        this.formEl.reset();
+        
+        btn.disabled = false
       }, (e) => {
 
         console.error(e)
@@ -52,7 +63,7 @@ class UserController {
       if (file) {
         fileReader.readAsDataURL(file);
       } else {
-        resolve();
+        resolve('dist/img/boxed-bg.jpg');
       }
     });
     
@@ -70,6 +81,12 @@ class UserController {
         user[field.name] = field.value
         }
         
+    }
+    else if (field.name == 'admin') {
+      user[field.name] = field.checked
+
+      
+      
         } else {
             user[field.name] = field.value
         }
@@ -88,10 +105,12 @@ class UserController {
     }
 
 
-    addLine(dataUser) {
-    
-    this.tableEl.innerHTML = ` <tr>
-                        <td>
+  addLine(dataUser) {
+      
+    let tr = document.createElement('tr')
+
+    tr.innerHTML = 
+      `  <td>
                           <img
                             src="${dataUser.photo}"
                             alt="User Image"
@@ -100,7 +119,7 @@ class UserController {
                         </td>
                         <td>${dataUser.name}</td>
                         <td>${dataUser.email}</td>
-                        <td>${dataUser.admin}</td>
+                        <td>${dataUser.admin? 'Sim': 'Não'}</td>
                         <td>${dataUser.birth}</td>
                         <td>
                           <button
@@ -115,8 +134,9 @@ class UserController {
                           >
                             Excluir
                           </button>
-                        </td>
-                      </tr>`
+                        </td>`
+    
+    this.tableEl.appendChild(tr)
     
 }
 }
