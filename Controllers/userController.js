@@ -3,7 +3,8 @@ class UserController {
     constructor(formId, tableId) {
         
         this.formEl = document.getElementById(formId)
-        this.tableEl = document.getElementById(tableId)
+      this.tableEl = document.getElementById(tableId)
+      this._locale = 'pt-br'
 
         this.onSubmit();
   }
@@ -72,9 +73,15 @@ class UserController {
 
     getValues() {
         
-        let user = {};
+      let user = {};
+      let isValid = true;
 
-        [... this.formEl.elements].forEach( (field, index) => {
+      [... this.formEl.elements].forEach((field, index) => {
+          
+        if (['name', 'email', 'password'].indexOf(field.name) > -1 && !field.value) {
+          field.parentElement.classList.add('has-error');
+            isValid = false
+        }
     
     if (field.name == 'gender') {
         if (field.checked) {
@@ -92,7 +99,11 @@ class UserController {
         }
   
 
-        })
+      })
+      
+      if (!isValid) {
+        return false
+      }
     
         return new User(user.name,
         user.gender,
@@ -120,7 +131,7 @@ class UserController {
                         <td>${dataUser.name}</td>
                         <td>${dataUser.email}</td>
                         <td>${dataUser.admin? 'Sim': 'Não'}</td>
-                        <td>${dataUser.birth}</td>
+                        <td>${ Util.dateFormat(dataUser.register)}</td>
                         <td>
                           <button
                             type="button"
