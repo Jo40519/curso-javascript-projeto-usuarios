@@ -6,10 +6,16 @@ class UserController {
       this.tableEl = document.getElementById(tableId)
       this._locale = 'pt-br'
 
-        this.onSubmit();
+      this.onSubmit();
+      this.onEdit();
   }
   
 
+  onEdit() {
+    document.querySelector('#box-user-update, .btn-cancel').addEventListener('click', e => {
+      this.showPanelCreate();
+    })
+  }
 
     onSubmit() {
 
@@ -142,7 +148,7 @@ class UserController {
                         <td>
                           <button
                             type="button"
-                            class="btn btn-primary btn-xs btn-flat"
+                            class="btn btn-primary btn-xs btn-flat btn-edit"
                           >
                             Editar
                           </button>
@@ -154,12 +160,27 @@ class UserController {
                           </button>
                         </td>`
     
+    tr.querySelector('.btn-edit').addEventListener('click', e => {
+
+      console.log(JSON.parse(tr.dataset.user))
+      this.showPanelUpdate();
+    })
+    
     this.tableEl.appendChild(tr)
 
     this.updateCount()
     
   }
   
+  showPanelCreate() {
+     document.getElementById('box-user-create').style.display = 'block';
+      document.getElementById('box-user-update').style.display = 'none';
+  }
+
+  showPanelUpdate() {
+     document.getElementById('box-user-create').style.display = 'none';
+      document.getElementById('box-user-update').style.display = 'block';
+  }
   
 
   updateCount() {
@@ -171,7 +192,13 @@ class UserController {
 
     [...this.tableEl.children].forEach(tr => {
       numberUsers++
-      console.log(tr.dataset.user)
-    })
+      let user = JSON.parse(tr.dataset.user)
+      if (user._admin) {
+        numbersAdmin++
+      }
+    });
+
+    document.getElementById('number-users').innerHTML = numberUsers;
+    document.getElementById('number-users-admin').innerHTML = numbersAdmin
   }
 }
