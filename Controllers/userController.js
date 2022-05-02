@@ -185,8 +185,6 @@ class UserController {
 
   updateCount() {
 
-
-
     let numberUsers = 0;
     let numbersAdmin = 0;
 
