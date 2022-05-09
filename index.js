@@ -1,4 +1,4 @@
-let userController = new UserController('form-user-create', 'table-users');
+let userController = new UserController('form-user-create', 'form-user-update', 'table-users');
 
 
 let nomes = 'João Vitor Nunes Lobato de Souza'
@@ -8,4 +8,17 @@ const tratarNomes = nomes.split(' ').map(nomeAtual => {
     nomeAtual.toLowerCase().slice(1)
 })
 
-console.log(tratarNomes)
+let numbers = [{ nome: 'João', Age: 21 }]
+
+numbers.forEach(element => {
+    let elementStringfy = JSON.stringify(element.Age)
+    element.Age = JSON.parse(elementStringfy)
+    console.log(typeof element.Age)
+})
+
+
+let palavra = 'world'
+
+let formatado = palavra.split('').reverse().join('')
+
+console.log(formatado)
