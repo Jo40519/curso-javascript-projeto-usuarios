@@ -8,6 +8,8 @@ const tratarNomes = nomes.split(' ').map(nomeAtual => {
     nomeAtual.toLowerCase().slice(1)
 })
 
+console.log(nomes)
+
 let numbers = [{ nome: 'João', Age: 21 }]
 
 numbers.forEach(element => {
